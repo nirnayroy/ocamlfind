@@ -25,8 +25,13 @@ let real_toploop =
 let directive_table = (Toploop.directive_table [@alert "-deprecated"])
 
 let log : (string -> unit) ref =
+  let print_err (s : string) =
+    output_string stderr s;
+    output_char stderr '\n';
+    flush stderr
+  in
   let ignore_string (_ : string) = () in
-  ref (if real_toploop then prerr_endline else ignore_string)
+  ref (if real_toploop then print_err else ignore_string)
 
 let rec remove_dups l =
   match l with
