@@ -122,6 +122,8 @@ topfind: topfind.compat.in
 	        $(SH) $(TOP)/tools/patch '@SITELIB@' '$(OCAML_SITELIB)' | \
 	        $(SH) $(TOP)/tools/patch '@RELATIVE_PATHS@' '$(RELATIVE_PATHS)' \
 	    	    >topfind
+	sed 's#/_build/.sandbox/[^/]*/_private/#/_build/_private/#g' topfind > topfind.new && \
+	mv topfind.new topfind
 
 num_top.cma: $(NUMTOP_OBJECTS)
 	$(OCAMLC) -a -o num_top.cma $(NUMTOP_OBJECTS)
@@ -194,5 +196,4 @@ fl_meta.ml: fl_meta.mll
 # Don't remove fl_metascanner.ml:
 .PRECIOUS: fl_metascanner.ml
 
-include depend
-
+-include depend

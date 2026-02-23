@@ -382,7 +382,7 @@ let run_command ?filter verbose cmd args =
      *)
 
     let old_sigint =
-      Sys.signal Sys.sigint Sys.Signal_ignore in
+      (Sys.signal [@alert "-unsafe_multidomain"]) Sys.sigint Sys.Signal_ignore in
 
     let need_exe =
       List.mem Findlib_config.system [ "win32"; "win64"; "mingw"; "mingw64" ] in
@@ -425,7 +425,7 @@ let run_command ?filter verbose cmd args =
     end;
 
     let (_,status) = Unix.waitpid [] pid in
-    Sys.set_signal Sys.sigint old_sigint;
+    (Sys.set_signal [@alert "-unsafe_multidomain"]) Sys.sigint old_sigint;
     begin
       match status with
         Unix.WEXITED 0 -> ()
