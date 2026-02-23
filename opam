@@ -27,6 +27,7 @@ build: [
     "-no-topfind" {ocaml:preinstalled}
   ]
   [make "all"]
+  ["sh" "-c" "sed s#/_build/.sandbox/[^/]*/_private/#/_build/_private/# src/findlib/topfind > src/findlib/topfind.new && mv src/findlib/topfind.new src/findlib/topfind"]
   [make "opt"] {ocaml:native}
 ]
 install: [
